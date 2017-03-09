@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule }  from '@angular/platform-browser';
 
-import { InputTextModule } from 'primeng/primeng';
+import { InputTextModule, ButtonModule } from 'primeng/primeng';
 import { AppComponent } from './app.component';
 
 @NgModule({
   imports: [
-    BrowserModule, InputTextModule
+    BrowserModule, InputTextModule, ButtonModule
   ],
   declarations: [
     AppComponent

@@ -12,5 +12,7 @@ import 'rxjs';
 // primeng
 import 'primeng/primeng';
 
-import '../node_modules/primeng/resources/themes/cupertino/theme.css';
+import '../node_modules/primeng/resources/themes/start/theme.css';
 import '../node_modules/primeng/resources/primeng.css';
+
+import './assets/css/font-awesome.min.css';
