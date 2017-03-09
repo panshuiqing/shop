@@ -8,3 +8,9 @@ import '@angular/router';
 
 // RxJS
 import 'rxjs';
+
+// primeng
+import 'primeng/primeng';
+
+import '../node_modules/primeng/resources/themes/cupertino/theme.css';
+import '../node_modules/primeng/resources/primeng.css';
