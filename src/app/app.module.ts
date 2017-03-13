@@ -1,16 +1,19 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule }  from '@angular/platform-browser';
+import { BrowserModule } from '@angular/platform-browser';
 
-import { InputTextModule, ButtonModule } from 'primeng/primeng';
+import { PageNotFoundComponent } from './404.component';
 import { AppComponent } from './app.component';
+import { AppRoutingModule } from './app-routing.module';
+import { LoginService } from './service/login.service';
 
 @NgModule({
   imports: [
-    BrowserModule, InputTextModule, ButtonModule
+    BrowserModule,  AppRoutingModule
   ],
   declarations: [
-    AppComponent
+    AppComponent, PageNotFoundComponent
   ],
-  bootstrap: [ AppComponent ]
+  providers: [LoginService],
+  bootstrap: [AppComponent]
 })
 export class AppModule { }
