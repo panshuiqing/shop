@@ -1,23 +1,22 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-
+import { LoginComponent, LoginModule } from './login';
+import { HomeComponent, HomeModule, HomeRoutes } from './home';
 import { PageNotFoundComponent } from './404.component';
 
 const appRoutes: Routes = [
-  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path: '', component: LoginComponent, pathMatch: 'full' },
+  { path: 'login', component: LoginComponent },
   {
-    path: 'login', loadChildren: () => new Promise(function (resolve) {
-      (require as any).ensure([], function (require: any) {
-        resolve(require('./login/login.module')['LoginModule']);
-      });
-    })
+    path: 'home', component: HomeComponent, children: HomeRoutes
   },
-  {path: '**', component: PageNotFoundComponent}
+  { path: '**', component: PageNotFoundComponent }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(appRoutes)],
-  exports: [RouterModule]
+  imports: [LoginModule, HomeModule, RouterModule.forRoot(appRoutes, { useHash: true })],
+  exports: [RouterModule],
+  declarations: [PageNotFoundComponent]
 })
 export class AppRoutingModule {
 

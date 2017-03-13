@@ -12,8 +12,6 @@ export class AppComponent {
   }
 
   constructor(private loginService: LoginService){
-    console.log("app before " + loginService.logined);
     loginService.logined = false;
-    console.log("app after " + loginService.logined);
   }
 }
