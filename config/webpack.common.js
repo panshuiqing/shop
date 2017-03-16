@@ -7,7 +7,8 @@ module.exports = {
   entry: {
     'polyfills': './src/polyfills.ts',
     'vendor': './src/vendor.ts',
-    'app': './src/browser.ts'
+    'app': './src/browser.ts',
+    'config': './src/configs.ts'
   },
 
   resolve: {
@@ -56,7 +57,7 @@ module.exports = {
     ),
 
     new webpack.optimize.CommonsChunkPlugin({
-      name: ['app', 'vendor', 'polyfills']
+      name: ['config', 'app', 'vendor', 'polyfills']
     }),
 
     new HtmlWebpackPlugin({

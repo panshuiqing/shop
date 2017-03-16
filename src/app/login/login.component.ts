@@ -12,7 +12,8 @@ export class LoginComponent {
   constructor(private loginService: LoginService, private route: Router) { }
 
   logOn() {
-    this.loginService.logined = true;
-    this.route.navigate(['/home']);
+    this.loginService.logOn('pansq', 'abc');
+    
+    // this.route.navigate(['/home']);
   }
 }
