@@ -16,11 +16,27 @@ export function syncDB(force: boolean = false) {
     );
 }
 
+let createdAt: Sequilize.DefineAttributeColumnOptions = {
+  type: Sequilize.DATE,
+  allowNull: true,
+  comment: '创建时间',
+  field: 'createdAt',
+  defaultValue: Sequilize.NOW
+};
+
 let createdBy: Sequilize.DefineAttributeColumnOptions = {
   type: Sequilize.INTEGER,
   allowNull: true,
   comment: '创建人',
   field: 'createdBy'
+};
+
+let updatedAt: Sequilize.DefineAttributeColumnOptions = {
+  type: Sequilize.DATE,
+  allowNull: true,
+  comment: '修改时间',
+  field: 'updatedAt',
+  defaultValue: Sequilize.NOW
 };
 
 let updatedBy: Sequilize.DefineAttributeColumnOptions = {
@@ -38,8 +54,10 @@ let enabled: Sequilize.DefineAttributeColumnOptions = {
   defaultValue: true
 };
 
-export let baseColumns : Sequilize.DefineAttributes = {
+export let baseColumns: Sequilize.DefineAttributes = {
+  "createdAt": createdAt,
   "createdBy": createdBy,
+  "updatedAt": updatedAt,
   "updatedBy": updatedBy,
   "enabled": enabled
 };

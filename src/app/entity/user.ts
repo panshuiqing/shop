@@ -3,35 +3,48 @@ import { dbUtil, baseColumns } from './dbUtil';
 import { Entity } from './entity';
 
 export class UserEntity extends Entity {
+  loginName: string;
   username: string;
   password: string;
-  salt?: string;
+  /**
+   * 用户类型：1系统管理员;2普通用户
+   */
+  userType?: string;
   email?: string;
   isBuilt?: boolean;
 }
 
-let username: Sequilize.DefineAttributeColumnOptions = {
-  type: Sequilize.STRING(50),
+let loginName: Sequilize.DefineAttributeColumnOptions = {
+  type: Sequilize.STRING(20),
   allowNull: false,
-  comment: '用户名',
+  field: 'loginName'
+};
+
+let username: Sequilize.DefineAttributeColumnOptions = {
+  type: Sequilize.STRING(20),
+  allowNull: false,
   field: 'username'
 };
 
 let password: Sequilize.DefineAttributeColumnOptions = {
-  type: Sequilize.STRING(50),
+  type: Sequilize.STRING(36),
   allowNull: false,
-  comment: '密码',
   field: 'password'
+};
+
+let userType: Sequilize.DefineAttributeColumnOptions = {
+  type: Sequilize.STRING(2),
+  allowNull: false,
+  comment: '用户类型',
+  field: 'userType',
+  defaultValue: "2"
 };
 
 let email: Sequilize.DefineAttributeColumnOptions = {
   type: Sequilize.STRING(255),
-  comment: '电子邮件'
-};
-
-let salt: Sequilize.DefineAttributeColumnOptions = {
-  type: Sequilize.STRING(50),
-  allowNull: true
+  allowNull: true,
+  comment: '电子邮件',
+  field: 'email'
 };
 
 let isBuilt: Sequilize.DefineAttributeColumnOptions = {
@@ -44,10 +57,11 @@ let isBuilt: Sequilize.DefineAttributeColumnOptions = {
 
 
 let userColumns: Sequilize.DefineAttributes = {
+  "loginName": loginName,
   "username": username,
   "password": password,
+  "userType": userType,
   "email": email,
-  "salt": salt,
   "isBuilt": isBuilt
 };
 
