@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
-
+import { Message } from 'primeng/primeng';
 import { LoginService } from '../service/login.service';
 
 @Component({
@@ -18,10 +18,12 @@ export class LoginComponent {
   @Input()
   password: string = '';
 
+  msgs: Message[] = [];
+
   constructor(private loginService: LoginService, private route: Router) { }
 
   ngOnInit() {
-    let savedUser = this.loginService.loadStorage();
+    let savedUser = this.loginService.loadSavedUser();
     if (savedUser != null && savedUser.rememberMe) {
       this.loginName = savedUser.loginName;
       this.password = savedUser.password;
@@ -30,9 +32,13 @@ export class LoginComponent {
   }
 
   logOn() {
-    let logined = this.loginService.logOn({ loginName: this.loginName, password: this.password, rememberMe: this.rememberMe });
-    if (logined) {
+    let result = this.loginService.logOn({ loginName: this.loginName, password: this.password, rememberMe: this.rememberMe });
+    if (result.valid) {
       this.route.navigate(['/home']);
+    }
+    else {
+      this.msgs = [];
+      this.msgs.push({ severity: 'error', summary: '错误提示', detail: result.message });
     }
   }
 }

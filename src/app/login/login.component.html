@@ -1,6 +1,7 @@
 <div id="login-wraper">
   <div id="login-container">
     <h3>Lite Market</h3>
+    <p-growl [value]="msgs" [sticky]="false"></p-growl>
     <div class="ui-g ui-fluid">
       <div class="ui-g-12">
         <input type="text" [(ngModel)]="loginName" pInputText placeholder="登录名" required/>
