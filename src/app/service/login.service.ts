@@ -1,13 +1,25 @@
 import { Injectable } from '@angular/core';
-import { syncDB } from '../entity';
+import { syncDB, UserEntity } from '../entity';
+import { LoginModel } from '../viewModel';
 import * as fs from 'fs';
+
+const LOGIN_KEY: string = "loginUser";
 
 @Injectable()
 export class LoginService {
-  logined: boolean = false;
 
-  logOn(userName: string, password: string) {
-    syncDB(true);
-    console.log('aaaa');
+  logOn(loginModel: LoginModel): boolean {
+    localStorage.setItem(LOGIN_KEY, JSON.stringify(loginModel));
+    return true;
+  }
+
+  loadStorage(): LoginModel {
+    let val = localStorage.getItem(LOGIN_KEY);
+    if (val && val.length > 0) {
+      return JSON.parse(val);
+    }
+    else {
+      return null;
+    }
   }
 }
