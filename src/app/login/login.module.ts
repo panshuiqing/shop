@@ -1,10 +1,11 @@
 import { NgModule } from '@angular/core';
-import { InputTextModule, ButtonModule } from 'primeng/primeng';
+import { FormsModule } from '@angular/forms';
+import { InputTextModule, ButtonModule, CheckboxModule } from 'primeng/primeng';
 
 import { LoginComponent } from './login.component';
 
 @NgModule({
-  imports: [InputTextModule, ButtonModule],
+  imports: [FormsModule, InputTextModule, ButtonModule, CheckboxModule],
   declarations: [LoginComponent],
   exports: []
 })

@@ -1,4 +1,22 @@
-<div class="form-group" >
-<input type="text"  pInputText required/>
-<button pButton type="text"  icon="fa-heart" label="Click" (click)="logOn()"></button>
+<div id="login-wraper">
+  <div id="login-container">
+    <h3>Lite Market</h3>
+    <div class="ui-g ui-fluid">
+      <div class="ui-g-12">
+        <input type="text"  pInputText placeholder="用户名" required/>
+      </div>
+      <div class="ui-g-12">
+        <input type="password"  pInputText placeholder="密码" required/>
+      </div>
+      <div class="ui-g-12 ui-md-6">
+        <p-checkbox [(ngModel)]="checked" binary="true" label="记住密码"></p-checkbox>
+      </div>
+      <div class="ui-g-12 ui-md-6">
+        <a href="#">忘记密码</a>
+      </div>
+      <div class="ui-g-12">
+        <button pButton type="text" label="登  录" (click)="logOn()"></button>
+      </div>
+    </div>
+  </div>
 </div>
