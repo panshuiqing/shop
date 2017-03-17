@@ -16,7 +16,9 @@ import 'sequelize';
 // primeng
 import 'primeng/primeng';
 
-import '../node_modules/primeng/resources/themes/start/theme.css';
+// import css files
+import '../node_modules/primeng/resources/themes/omega/theme.css';
 import '../node_modules/primeng/resources/primeng.min.css';
-
 import './assets/css/font-awesome.min.css';
+
+import './assets/css/site.css';

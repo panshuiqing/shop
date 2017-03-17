@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import '../assets/css/site.css';
 import { LoginService } from './service/login.service';
 
 @Component({
