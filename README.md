@@ -1,2 +1,2 @@
 # Lite Market
-This is a little Market system.
+This is a little Market system. Use Angular2 + webpack + mysql.
