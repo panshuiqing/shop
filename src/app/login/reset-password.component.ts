@@ -21,8 +21,8 @@ export class ResetPasswordComponent implements OnInit {
   constructor(private loginService: LoginService, private route: Router, private app: ApplicationRef) { }
   
   ngOnInit() {
-    let savedUser = this.loginService.loadSavedUser();
-    if (savedUser != null && savedUser.rememberMe) {
+    let savedUser = this.loginService.currentUser;
+    if (savedUser != null) {
       this.loginName = savedUser.loginName;
     }
   }
