@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
-import { LoginService } from './service';
+import { Providers } from './service';
 import { AppRoutingModule } from './app-routing.module';
 import { SharedModule } from './shared';
 
@@ -13,7 +13,7 @@ import { SharedModule } from './shared';
   declarations: [
     AppComponent
   ],
-  providers: [LoginService],
+  providers: [...Providers],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -10,6 +10,10 @@ const LOGIN_KEY: string = "loginUser";
 export class LoginService {
   currentUser: UserEntity;
 
+  protected saveUser(loginModel: LoginModel):void {
+    localStorage.setItem(LOGIN_KEY, JSON.stringify(loginModel));
+  }
+
   logOn(loginModel: LoginModel): BlueBird<ValidationResult> {
     if (loginModel.loginName.trim() == '') {
       return BlueBird.resolve(ValidationResult.fail('登录名不能为空'));
@@ -28,7 +32,7 @@ export class LoginService {
           if (user.password != cryptedPwd) {
             return ValidationResult.fail('密码不正确');
           } else {
-            localStorage.setItem(LOGIN_KEY, JSON.stringify(loginModel));
+            this.saveUser(loginModel);
             this.currentUser = user;
             return ValidationResult.success();
           }
@@ -56,11 +60,9 @@ export class LoginService {
         }
         else {
           let newPwd = cryptoHelper.encode(password);
-          console.log('newpwd:' + newPwd);
           user.password = newPwd;
           return user.save()
             .then(x => {
-              console.log(x.password);
               return ValidationResult.success();
             })
             .catch(error => {
