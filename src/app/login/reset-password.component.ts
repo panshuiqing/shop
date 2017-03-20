@@ -4,13 +4,10 @@ import { Message } from 'primeng/primeng';
 import { LoginService } from '../service/login.service';
 
 @Component({
-  selector: 'ax-login',
-  template: require('./login.component.html')
+  selector: 'ax-reset-pwd',
+  template: require('./reset-password.component.html')
 })
-export class LoginComponent {
-
-  @Input()
-  rememberMe: boolean;
+export class ResetPasswordComponent {
 
   @Input()
   loginName: string = '';
@@ -23,33 +20,27 @@ export class LoginComponent {
 
   constructor(private loginService: LoginService, private route: Router, private app: ApplicationRef) { }
 
-  ngOnInit() {
-    let savedUser = this.loginService.loadSavedUser();
-    if (savedUser != null && savedUser.rememberMe) {
-      this.loginName = savedUser.loginName;
-      this.password = savedUser.password;
-      this.rememberMe = savedUser.rememberMe;
-    }
-  }
-
-  logOn() {
+  confirm(){
     let that = this;
-    this.loginService.logOn({ loginName: this.loginName, password: this.password, rememberMe: this.rememberMe })
+    this.loginService.resetPassword(this.loginName, this.password)
       .then(result => {
         if (result.valid) {
-          that.route.navigate(['/home']);
+          that.msgs = [];
+          that.msgs.push({ severity: 'info', summary: '信息提示', detail: '密码重置成功' });
+          that.app.tick();
+          setTimeout(function() {
+            that.route.navigate(['/login']);
+          }, 2000);          
         }
         else {
           that.msgs = [];
           that.msgs.push({ severity: 'error', summary: '错误提示', detail: result.message });
           that.app.tick();
         }
-      });
+      });    
   }
 
-  forgetPassword(event: UIEvent){
-    event.preventDefault();
-    event.stopPropagation();
-    this.route.navigate(['/reset-password']);
+  cancel(){
+    this.route.navigate(['/login']);
   }
 }

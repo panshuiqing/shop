@@ -2,7 +2,7 @@ import * as Sequilize from 'sequelize';
 import { dbUtil, baseColumns } from './dbUtil';
 import { Entity } from './entity';
 
-export class UserEntity extends Entity {
+export interface UserEntity extends Entity {
   loginName: string;
   username: string;
   password: string;

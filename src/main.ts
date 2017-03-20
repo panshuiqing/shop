@@ -13,20 +13,20 @@ function initialize() {
 
     function createWindow() {
         var windowOptions: Electron.BrowserWindowOptions = {
-            width: 800,
-            minWidth: 680,
-            minHeight: 400,
-            height: 480,
+            width: 1000,
+            minWidth: 800,
+            minHeight: 600,
+            height: 600,
             title: app.getName()
         }
 
         mainWindow = new BrowserWindow(windowOptions)
+        mainWindow.maximize();
         mainWindow.loadURL(path.join('file://', __dirname, 'index.html'))
 
-        // Launch fullscreen with DevTools open, usage: npm run debug
+        // Launch fullscreen with DevTools open, usage: npm run debug       
         if (debug) {
             mainWindow.webContents.openDevTools()
-            mainWindow.maximize()
             require('devtron').install()
         }
 

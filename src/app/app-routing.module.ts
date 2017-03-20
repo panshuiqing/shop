@@ -1,12 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LoginComponent, LoginModule } from './login';
+import { LoginComponent, ResetPasswordComponent, LoginModule } from './login';
 import { HomeComponent, HomeModule, HomeRoutes } from './home';
 import { PageNotFoundComponent } from './404.component';
 
 const appRoutes: Routes = [
   { path: '', component: LoginComponent, pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
+  { path: 'reset-password', component: ResetPasswordComponent },
   {
     path: 'home', component: HomeComponent, children: HomeRoutes
   },

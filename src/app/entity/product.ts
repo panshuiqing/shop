@@ -2,7 +2,7 @@ import * as Sequilize from 'sequelize';
 import { dbUtil, baseColumns } from './dbUtil';
 import { Entity } from './entity';
 
-export class ProductEntity extends Entity {
+export interface ProductEntity extends Entity {
   /**
    * 产品编码(条形码)
    */

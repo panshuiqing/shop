@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { UserEntity, UserModel } from '../entity';
+import { UserEntity, UserModel, syncDB } from '../entity';
 import { LoginModel, ValidationResult } from '../viewModel';
 import { cryptoHelper } from '../util';
+import * as BlueBird from 'bluebird';
 
 const LOGIN_KEY: string = "loginUser";
 
@@ -9,30 +10,69 @@ const LOGIN_KEY: string = "loginUser";
 export class LoginService {
   currentUser: UserEntity;
 
-  logOn(loginModel: LoginModel): ValidationResult {
+  logOn(loginModel: LoginModel): BlueBird<ValidationResult> {
     if (loginModel.loginName.trim() == '') {
-      return ValidationResult.fail('登录名不能为空');
+      return BlueBird.resolve(ValidationResult.fail('登录名不能为空'));
     }
     if (loginModel.password.trim() == '') {
-      return ValidationResult.fail('密码不能为空');
+      return BlueBird.resolve(ValidationResult.fail('密码不能为空'));
     }
 
     let result = UserModel.findOne({ where: { "loginName": loginModel.loginName } })
-      .value();
-    if (result != null) {
-      let cryptedPwd = cryptoHelper.encode(loginModel.password);
-      if (result.password != cryptedPwd) {
-        return ValidationResult.fail('密码不正确');
-      }
-      else {
-        this.currentUser = result;
-        localStorage.setItem(LOGIN_KEY, JSON.stringify(loginModel));
-        return ValidationResult.success();
-      }
+      .then(user => {
+        if (user == null) {
+          return ValidationResult.fail('用户名不存在');
+        }
+        else {
+          let cryptedPwd = cryptoHelper.encode(loginModel.password);
+          if (user.password != cryptedPwd) {
+            return ValidationResult.fail('密码不正确');
+          } else {
+            localStorage.setItem(LOGIN_KEY, JSON.stringify(loginModel));
+            this.currentUser = user;
+            return ValidationResult.success();
+          }
+        }
+      })
+      .catch(error => {
+        return ValidationResult.fail('登录异常');
+      });
+
+    return result;
+  }
+
+  resetPassword(loginName: string, password: string): BlueBird<ValidationResult> {
+    if (loginName.trim() == '') {
+      return BlueBird.resolve(ValidationResult.fail('登录名不能为空'));
     }
-    else {
-      return ValidationResult.fail('用户名不存在');
+    if (password.trim() == '') {
+      return BlueBird.resolve(ValidationResult.fail('新密码不能为空'));
     }
+
+    let result = UserModel.findOne({ where: { "loginName": loginName } })
+      .then(user => {
+        if (user == null) {
+          return ValidationResult.fail('用户名不存在');
+        }
+        else {
+          let newPwd = cryptoHelper.encode(password);
+          console.log('newpwd:' + newPwd);
+          user.password = newPwd;
+          return user.save()
+            .then(x => {
+              console.log(x.password);
+              return ValidationResult.success();
+            })
+            .catch(error => {
+              return ValidationResult.fail('密码重置失败');;
+            });
+        }
+      })
+      .catch(error => {
+        return ValidationResult.fail('系统异常');
+      });
+
+    return result;
   }
 
   loadSavedUser(): LoginModel {
