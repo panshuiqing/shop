@@ -7,7 +7,7 @@ import { LoginService } from '../service/login.service';
   selector: 'ax-login',
   template: require('./login.component.html')
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
 
   @Input()
   rememberMe: boolean;

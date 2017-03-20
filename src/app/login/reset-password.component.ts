@@ -7,7 +7,7 @@ import { LoginService } from '../service/login.service';
   selector: 'ax-reset-pwd',
   template: require('./reset-password.component.html')
 })
-export class ResetPasswordComponent {
+export class ResetPasswordComponent implements OnInit {
 
   @Input()
   loginName: string = '';
@@ -19,28 +19,33 @@ export class ResetPasswordComponent {
   msgs: Message[] = [];
 
   constructor(private loginService: LoginService, private route: Router, private app: ApplicationRef) { }
+  
+  ngOnInit() {
+    let savedUser = this.loginService.loadSavedUser();
+    if (savedUser != null && savedUser.rememberMe) {
+      this.loginName = savedUser.loginName;
+    }
+  }
 
-  confirm(){
+  confirm() {
     let that = this;
     this.loginService.resetPassword(this.loginName, this.password)
       .then(result => {
         if (result.valid) {
           that.msgs = [];
           that.msgs.push({ severity: 'info', summary: '信息提示', detail: '密码重置成功' });
+          setTimeout(() => { this.route.navigate(['/login']); }, 1000);
           that.app.tick();
-          setTimeout(function() {
-            that.route.navigate(['/login']);
-          }, 2000);          
         }
         else {
           that.msgs = [];
           that.msgs.push({ severity: 'error', summary: '错误提示', detail: result.message });
           that.app.tick();
         }
-      });    
+      });
   }
 
-  cancel(){
+  cancel() {
     this.route.navigate(['/login']);
   }
 }
